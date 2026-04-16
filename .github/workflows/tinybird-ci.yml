@@ -19,7 +19,7 @@ env:
 
 jobs:
   ci:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     defaults:
       run:
         working-directory: '.'
@@ -42,7 +42,7 @@ jobs:
         run: tb secret set STG_PG_PASSWORD ${{ secrets.STG_PG_PASSWORD }}
       - name: Build project
         run: tb build
-      # - name: Test project
-      #   run: tb test run
+      - name: Check secrets
+        run: tb secret ls
       - name: Deployment check
         run: tb --cloud --host ${{ env.TINYBIRD_HOST }} --token ${{ env.TINYBIRD_TOKEN }} deploy --check
