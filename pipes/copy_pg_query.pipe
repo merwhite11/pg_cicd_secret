@@ -6,12 +6,11 @@ SQL >
 %
 SELECT id
 FROM postgresql(
- # 'host.docker.internal:5432',
- 'local-postgres:5432',
-  'test_db',
+  {{tb_secret('STG_PG_HOST_PORT')}},
+  {{tb_secret('STG_PG_DB')}},
   'conversations_text_id',
- {{tb_secret('pg_username')}}, 
- {{tb_secret('pg_password')}}
+  {{tb_secret('STG_PG_USERNAME', 'meredithwhite')}},
+  {{tb_secret('STG_PG_PASSWORD', 'mw_password')}}
 )
 
 
