@@ -1,0 +1,10 @@
+{"event_id": "evt_179", "conversation_id": "conv_79", "user_id": "user_179", "event_type": "reaction_added", "event_timestamp": "2025-08-11 15:16:08"}
+{"event_id": "evt_7316", "conversation_id": "conv_16", "user_id": "user_316", "event_type": "message_received", "event_timestamp": "2025-08-12 03:43:51"}
+{"event_id": "evt_1811", "conversation_id": "conv_11", "user_id": "user_311", "event_type": "message_received", "event_timestamp": "2025-08-09 00:35:36"}
+{"event_id": "evt_5777", "conversation_id": "conv_77", "user_id": "user_277", "event_type": "conversation_started", "event_timestamp": "2025-08-22 04:42:50"}
+{"event_id": "evt_7063", "conversation_id": "conv_63", "user_id": "user_63", "event_type": "conversation_ended", "event_timestamp": "2025-08-20 22:21:24"}
+{"event_id": "evt_2359", "conversation_id": "conv_59", "user_id": "user_359", "event_type": "reaction_added", "event_timestamp": "2025-08-17 20:39:48"}
+{"event_id": "evt_3416", "conversation_id": "conv_16", "user_id": "user_416", "event_type": "message_received", "event_timestamp": "2025-08-04 22:22:11"}
+{"event_id": "evt_9732", "conversation_id": "conv_32", "user_id": "user_232", "event_type": "conversation_started", "event_timestamp": "2025-08-12 09:10:15"}
+{"event_id": "evt_394", "conversation_id": "conv_94", "user_id": "user_394", "event_type": "reaction_added", "event_timestamp": "2025-08-27 13:25:53"}
+{"event_id": "evt_9901", "conversation_id": "conv_1", "user_id": "user_401", "event_type": "message_received", "event_timestamp": "2025-08-21 17:00:46"}

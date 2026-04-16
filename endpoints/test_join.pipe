@@ -1,0 +1,25 @@
+NODE test_join_0
+SQL >
+%
+    SELECT
+        e.event_id,
+        e.conversation_id,
+        e.user_id,
+        e.event_type,
+        e.event_timestamp
+    FROM events AS e
+    INNER JOIN (
+        SELECT id
+        FROM postgresql(
+            # 'host.docker.internal:5432',
+            'local-postgres:5432',
+            'test_db',
+            'conversations_text_id',
+          {{tb_secret('pg_username')}}, 
+          {{tb_secret('pg_password')}}
+        )
+    ) AS c
+    ON e.conversation_id = c.id
+
+TYPE copy
+TARGET_DATASOURCE test_join_output

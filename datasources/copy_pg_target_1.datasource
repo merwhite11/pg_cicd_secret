@@ -1,0 +1,8 @@
+DESCRIPTION >
+    Datasource to store copied IDs from PostgreSQL table
+
+SCHEMA >
+    `id` String `json:$.id`
+
+ENGINE "MergeTree"
+ENGINE_SORTING_KEY id

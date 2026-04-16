@@ -1,0 +1,12 @@
+DESCRIPTION >
+    Datasource to store the output of test_join pipe
+
+SCHEMA >
+    `event_id` String `json:$.event_id`,
+    `conversation_id` String `json:$.conversation_id`,
+    `user_id` String `json:$.user_id`,
+    `event_type` String `json:$.event_type`,
+    `event_timestamp` DateTime `json:$.event_timestamp`
+
+ENGINE "MergeTree"
+ENGINE_SORTING_KEY event_id
