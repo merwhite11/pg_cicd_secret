@@ -35,7 +35,7 @@ jobs:
       - name: Add PostgreSQL host & port
         run: tb secret set STG_PG_HOST_PORT ${{ secrets.STG_PG_HOST_PORT }}
       - name: Add PostgreSQL database
-        run: tb secret set PG_DB postgres
+        run: tb secret set STG_PG_DB ${{ secrets.STG_PG_DB }}
       - name: Add PostgreSQL username
         run: tb secret set STG_PG_USERNAME ${{ secrets.STG_PG_USERNAME }}
       - name: Add PostgreSQL password
