@@ -6,7 +6,7 @@ SQL >
 %
 SELECT id
 FROM postgresql(
-  {{tb_secret('STG_PG_HOST_PORT')}},
+  {{tb_secret('STG_PG_HOST_PORT', 'ctrl0-postgres')}},
   {{tb_secret('STG_PG_DB')}},
   'conversations_text_id',
   {{tb_secret('STG_PG_USERNAME', 'meredithwhite')}},
