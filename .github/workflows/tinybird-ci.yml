@@ -46,6 +46,9 @@ jobs:
         run: tb secret ls
       - name: Deployment check
         run: tb --cloud --host ${{ env.TINYBIRD_HOST }} --token ${{ env.TINYBIRD_TOKEN }} deploy --check
-      - name: Show Tinybird Local server logs
+      - name: Find logs inside container
         if: always()
-        run: docker logs $(docker ps -q --filter "ancestor=tinybirdco/tinybird-local:latest") 2>&1
+        run: |
+          CONTAINER=$(docker ps -q --filter "ancestor=tinybirdco/tinybird-local:latest")
+          docker exec $CONTAINER find /var/log -type f 2>/dev/null
+          docker exec $CONTAINER find /app -name "*.log" -type f 2>/dev/null
