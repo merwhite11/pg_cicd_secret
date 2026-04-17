@@ -46,3 +46,6 @@ jobs:
         run: tb secret ls
       - name: Deployment check
         run: tb --cloud --host ${{ env.TINYBIRD_HOST }} --token ${{ env.TINYBIRD_TOKEN }} deploy --check
+      - name: Show Tinybird Local server logs
+        if: always()
+        run: docker logs $(docker ps -q --filter "ancestor=tinybirdco/tinybird-local:latest") 2>&1
