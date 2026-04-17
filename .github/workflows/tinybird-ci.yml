@@ -42,6 +42,16 @@ jobs:
         run: tb secret set STG_PG_PASSWORD ${{ secrets.STG_PG_PASSWORD }}
       - name: Build project
         run: tb --debug build
+      - name: Capture Tinybird server logs                                                                                                         
+        if: always()
+        run: |
+          CONTAINER=$(docker ps -q --filter "ancestor=tinybirdco/tinybird-local:latest")
+          echo "=== Log files in container ==="
+          docker exec $CONTAINER find /var/log -type f 2>/dev/null
+          echo "=== Supervisor child logs ==="
+          docker exec $CONTAINER sh -c "find /var/log/supervisor -type f -exec echo '--- {} ---' \; -exec tail -100 {} \; 2>/dev/null || true"
+          echo "=== Tinybird app logs ==="
+          docker exec $CONTAINER sh -c "find /app -name '*.log' -type f -exec echo '--- {} ---' \; -exec tail -100 {} \; 2>/dev/null || true"
       - name: Check secrets
         run: tb secret ls
       - name: Deployment check
