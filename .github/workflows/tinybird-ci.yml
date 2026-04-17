@@ -19,7 +19,7 @@ env:
 
 jobs:
   ci:
-    runs-on: blacksmith-2vcpu-ubuntu-2404
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: '.'
@@ -41,7 +41,7 @@ jobs:
       - name: Add PostgreSQL password
         run: tb secret set STG_PG_PASSWORD ${{ secrets.STG_PG_PASSWORD }}
       - name: Build project
-        run: tb build
+        run: tb --debug build
       - name: Check secrets
         run: tb secret ls
       - name: Deployment check
