@@ -33,13 +33,13 @@ jobs:
       - name: Install Tinybird CLI
         run: curl https://tinybird.co | sh
       - name: Add PostgreSQL host & port
-        run: tb secret set STG_PG_HOST_PORT ${{ secrets.STG_PG_HOST_PORT }}
+        run: tb secret set PG_HOST_PORT ${{ secrets.PG_HOST_PORT }}
       - name: Add PostgreSQL database
-        run: tb secret set STG_PG_DB ${{ secrets.STG_PG_DB }}
+        run: tb secret set PG_DB ${{ secrets.PG_DB }}
       - name: Add PostgreSQL username
-        run: tb secret set STG_PG_USERNAME ${{ secrets.STG_PG_USERNAME }}
+        run: tb secret set PG_USERNAME ${{ secrets.PG_USERNAME }}
       - name: Add PostgreSQL password
-        run: tb secret set STG_PG_PASSWORD ${{ secrets.STG_PG_PASSWORD }}
+        run: tb secret set PG_PASSWORD ${{ secrets.PG_PASSWORD }}
       - name: Build project
         run: tb --debug build
       - name: Capture Tinybird server logs                                                                                                           

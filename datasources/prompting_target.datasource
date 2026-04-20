@@ -1,0 +1,22 @@
+DESCRIPTION >
+  Synced organization id, product, prompts, chats, and conversations from PostgreSQL!
+
+SCHEMA >
+  `product_id` Nullable(String) `json:$.product_id`,
+  `survey_id` Nullable(String) `json:$.survey_id`,
+  `prompt_id` Nullable(String) `json:$.prompt_id`,
+  `conversation_query_id` String `json:$.conversation_query_id`,
+  `organization_id` Nullable(String) `json:$.organization_id`,
+  `view_id` Nullable(String) `json:$.view_id`,
+
+ENGINE "MergeTree"
+ENGINE_SORTING_KEY "conversation_query_id"
+
+FORWARD_QUERY > 
+  SELECT
+    defaultValueOfTypeName('Nullable(String)') AS product_id,
+    defaultValueOfTypeName('Nullable(String)') AS survey_id,
+    defaultValueOfTypeName('Nullable(String)') AS prompt_id,
+    conversation_query_id,
+    organization_id,
+    view_id

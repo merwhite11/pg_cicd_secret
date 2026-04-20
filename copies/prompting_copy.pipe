@@ -1,0 +1,90 @@
+NODE valid_pg_sync_view_conversations
+SQL >
+  %
+  SELECT
+    org.id as organization_id,
+    prompt.id as prompt_id,
+    brand.id as product_id,
+    NULL as survey_id,
+    cq.id as conversation_query_id,
+    view."viewId" as view_id
+  FROM postgresql(
+    {{tb_secret('PG_HOST_PORT', 'ctrl0-postgres')}},
+    {{tb_secret('PG_DB', 'postgres')}},
+    'brand',
+    {{tb_secret('PG_USERNAME', 'postgres')}},
+    {{tb_secret('PG_PASSWORD', 'postgres')}}
+  ) brand
+  LEFT JOIN postgresql(
+    {{tb_secret('PG_HOST_PORT', 'ctrl0-postgres')}},
+    {{tb_secret('PG_DB', 'postgres')}},
+    'organization',
+    {{tb_secret('PG_USERNAME', 'postgres')}},
+    {{tb_secret('PG_PASSWORD', 'postgres')}}
+  ) org ON org.id = brand."organizationId"
+  LEFT JOIN postgresql(
+    {{tb_secret('PG_HOST_PORT', 'ctrl0-postgres')}},
+    {{tb_secret('PG_DB', 'postgres')}},
+    'prompt',
+    {{tb_secret('PG_USERNAME', 'postgres')}},
+    {{tb_secret('PG_PASSWORD', 'postgres')}}
+  ) prompt ON brand.id = prompt."brandId"
+  LEFT JOIN postgresql(
+    {{tb_secret('PG_HOST_PORT', 'ctrl0-postgres')}},
+    {{tb_secret('PG_DB', 'postgres')}},
+    'conversation_query',
+    {{tb_secret('PG_USERNAME', 'postgres')}},
+    {{tb_secret('PG_PASSWORD', 'postgres')}}
+  ) cq ON prompt.id = cq."promptId"
+  LEFT JOIN postgresql(
+    {{tb_secret('PG_HOST_PORT', 'ctrl0-postgres')}},
+    {{tb_secret('PG_DB', 'postgres')}},
+    'view_conversation',
+    {{tb_secret('PG_USERNAME', 'postgres')}},
+    {{tb_secret('PG_PASSWORD', 'postgres')}}
+  ) view ON cq.id = view."conversationQueryId"
+  WHERE brand."deletedAt" IS NULL AND prompt."deletedAt" IS NULL AND cq."deletedAt" IS NULL AND view."deletedAt" IS NULL
+
+  UNION ALL
+
+  SELECT
+    org.id as organization_id,
+    prompt.id as prompt_id,
+    NULL as product_id,
+    survey.id as survey_id,
+    cq.id as conversation_query_id,
+    NULL as view_id
+  FROM postgresql(
+    {{tb_secret('PG_HOST_PORT')}},
+    {{tb_secret('PG_DB', 'postgres')}},
+    'survey',
+    {{tb_secret('PG_USERNAME', 'postgres')}},
+    {{tb_secret('PG_PASSWORD', 'postgres')}}
+  ) survey
+  LEFT JOIN postgresql(
+    {{tb_secret('PG_HOST_PORT')}},
+    {{tb_secret('PG_DB', 'postgres')}},
+    'organization',
+    {{tb_secret('PG_USERNAME', 'postgres')}},
+    {{tb_secret('PG_PASSWORD', 'postgres')}}
+  ) org ON org.id = survey."organizationId"
+  LEFT JOIN postgresql(
+    {{tb_secret('PG_HOST_PORT')}},
+    {{tb_secret('PG_DB', 'postgres')}},
+    'prompt',
+    {{tb_secret('PG_USERNAME', 'postgres')}},
+    {{tb_secret('PG_PASSWORD', 'postgres')}}
+  ) prompt ON survey.id = prompt."surveyId"
+  LEFT JOIN postgresql(
+    {{tb_secret('PG_HOST_PORT')}},
+    {{tb_secret('PG_DB', 'postgres')}},
+    'conversation_query',
+    {{tb_secret('PG_USERNAME', 'postgres')}},
+    {{tb_secret('PG_PASSWORD', 'postgres')}}
+  ) cq ON prompt.id = cq."promptId"
+  WHERE survey."deletedAt" IS NULL AND prompt."deletedAt" IS NULL AND cq."deletedAt" IS NULL
+
+TYPE COPY
+TARGET_DATASOURCE prompting_target
+COPY_SCHEDULE */3 * * * *
+COPY_MODE append
