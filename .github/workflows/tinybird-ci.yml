@@ -42,6 +42,14 @@ jobs:
         run: tb secret set PG_PASSWORD ${{ secrets.PG_PASSWORD }}
       - name: Build project
         run: tb --debug build
+      - name: Check secrets (cloud)
+        run: tb --cloud --host ${{ env.TINYBIRD_HOST }} --token ${{ env.TINYBIRD_TOKEN }} secret ls
+      - name: Test cloud PG connection
+        run: |
+          tb --cloud --host ${{ env.TINYBIRD_HOST }} --token ${{ env.TINYBIRD_TOKEN }} \
+            sql "SELECT count() FROM postgresql({{tb_secret('PG_HOST_PORT')}}, {{tb_secret('PG_DB')}}, 'brand', {{tb_secret('PG_USERNAME')}},{{tb_secret('PG_PASSWORD')}}) LIMIT 1"
+      - name: Deployment check
+        run: tb --cloud --host ${{ env.TINYBIRD_HOST }} --token ${{ env.TINYBIRD_TOKEN }} deploy --check
       - name: Capture Tinybird server logs                                                                                                           
         if: always()                                                                                                                               
         run: |
