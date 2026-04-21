@@ -32,8 +32,10 @@ jobs:
       - uses: actions/checkout@v3
       - name: Install Tinybird CLI
         run: curl https://tinybird.co | sh
-      - name: Add PostgreSQL host & port
-        run: tb secret set PG_HOST_PORT ${{ secrets.PG_HOST_PORT }}
+      - name: Sanity-set a known secret value in cloud
+        run: |
+          tb --cloud --host "$TINYBIRD_HOST" --token "$TINYBIRD_TOKEN" \
+            secret set PG_HOST_PORT "SENTINEL_VALUE_12345"
       - name: Add PostgreSQL database
         run: tb secret set PG_DB ${{ secrets.PG_DB }}
       - name: Add PostgreSQL username
