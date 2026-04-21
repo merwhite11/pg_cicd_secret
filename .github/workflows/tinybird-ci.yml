@@ -61,7 +61,7 @@ jobs:
       - name: Check secrets
         run: tb secret ls
       - name: Deployment check
-        run: tb --cloud --host ${{ env.TINYBIRD_HOST }} --token ${{ env.TINYBIRD_TOKEN }} deploy --check --allow-destructive-operations
+        run: tb --debug --cloud --host ${{ env.TINYBIRD_HOST }} --token ${{ env.TINYBIRD_TOKEN }} deploy --check --allow-destructive-operations
       - name: Find logs inside container
         if: always()
         run: |
