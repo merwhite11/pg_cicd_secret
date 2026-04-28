@@ -1,5 +1,5 @@
 DESCRIPTION >
-    Datasource to store copied IDs from PostgreSQL table
+    Datasource to store copied IDs from PostgreSQL table copy pipe
 
 SCHEMA >
     `id` String `json:$.id`
